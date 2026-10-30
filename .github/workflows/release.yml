@@ -102,10 +102,9 @@ jobs:
           | ``NotepadClassic-$version-win-arm64.zip`` | Windows on ARM (Snapdragon). Nothing else to install. |
           | ``NotepadClassic-$version-win-x64-framework-dependent.zip`` | Small download for PCs that have the [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0). |
 
-          Unzip anywhere and run ``NotepadClassic.exe``; there is no installer. The exe is not code-signed, so Windows
-          SmartScreen may warn on first run (More info, then Run anyway). Settings are kept in
-          ``HKCU\Software\NotepadClassic``; to remove the app, delete the folder and that key. ``SHA256SUMS.txt`` lists
-          the checksums of the zips.
+          Unzip anywhere and run ``NotepadClassic.exe``; there is no installer. The exe is not code-signed, so Windows SmartScreen may warn on first run (More info, then Run anyway).
+
+          Settings are kept in ``HKCU\Software\NotepadClassic``; to remove the app, delete the folder and that key. ``SHA256SUMS.txt`` lists the checksums of the zips.
 
           "@
           Set-Content release-notes.md $notes -Encoding utf8
