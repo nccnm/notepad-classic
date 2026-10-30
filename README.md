@@ -6,6 +6,17 @@ against the original running side by side. No Microsoft code, icons or binary re
 copied; behavior is ported, not code. `docs/parity.md` lists every behavior, where the port
 implements it, its tests, and whether the port matches the original or differs on purpose.
 
+## Download
+
+Get a zip from [Releases](https://github.com/nccnm/notepad-classic/releases), unzip it anywhere and run
+`NotepadClassic.exe`; there is no installer. `win-x64` and `win-arm64` need nothing else; the smaller
+`win-x64-framework-dependent` needs the .NET 10 Desktop Runtime. The exe is not code-signed, so SmartScreen may
+warn on the first run.
+
+To publish a release, push a tag: `git tag v1.0.0` then `git push origin v1.0.0`. The `Release` workflow runs the
+tests, builds the three single-file variants and creates the GitHub release (a tag with a suffix such as
+`v1.0.0-rc.1` makes a prerelease).
+
 ## Layout
 
 | Path | Contents |

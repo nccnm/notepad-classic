@@ -1,0 +1,115 @@
+name: Release
+
+# Pushing a tag such as v1.0.0 runs the tests, publishes three single-file builds and attaches them to a
+# GitHub release. A tag with a suffix (v1.0.0-rc.1) makes a prerelease.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore NotepadClassic.slnx
+
+      - name: Build (warnings are errors)
+        run: dotnet build NotepadClassic.slnx -c Release --no-restore
+
+      - name: Core tests with coverage gate (90% line and branch)
+        run: >
+          dotnet test --project tests/NotepadClassic.Core.Tests -c Release --no-build --
+          --coverlet --coverlet-include "[NotepadClassic.Core]*"
+          --coverlet-threshold 90 --coverlet-threshold-type line,branch --coverlet-threshold-stat Total
+
+      - name: Platform integration tests
+        run: dotnet test --project tests/NotepadClassic.Platform.Tests -c Release --no-build
+
+      - name: App shell tests
+        run: dotnet test --project tests/NotepadClassic.App.Tests -c Release --no-build
+
+      - name: End-to-end tests (FlaUI on the built exe)
+        run: dotnet test --project tests/NotepadClassic.E2E.Tests -c Release --no-build
+
+      - name: Publish and package
+        shell: pwsh
+        run: |
+          $version = '${{ github.ref_name }}'.TrimStart('v')
+          $variants = @(
+            @{ Name = 'win-x64'; Rid = 'win-x64'; Mode = '--self-contained' }
+            @{ Name = 'win-arm64'; Rid = 'win-arm64'; Mode = '--self-contained' }
+            @{ Name = 'win-x64-framework-dependent'; Rid = 'win-x64'; Mode = '--no-self-contained' }
+          )
+          New-Item dist -ItemType Directory | Out-Null
+          foreach ($v in $variants) {
+            # Publishes of the same runtime identifier share obj\...\<rid>; ReadyToRun output left there by
+            # another mode makes the exe fail fast at startup (docs/performance.md).
+            Remove-Item "src/NotepadClassic.App/obj/Release/net10.0-windows/$($v.Rid)" -Recurse -Force -ErrorAction SilentlyContinue
+            $dir = "publish/$($v.Name)"
+            dotnet publish src/NotepadClassic.App -c Release -r $v.Rid $v.Mode -p:PublishSingleFile=true "-p:Version=$version" -o $dir
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            Copy-Item LICENSE $dir
+            Compress-Archive -Path "$dir/NotepadClassic.exe", "$dir/LICENSE" -DestinationPath "dist/NotepadClassic-$version-$($v.Name).zip"
+          }
+          Get-ChildItem dist/*.zip | ForEach-Object { '{0}  {1}' -f (Get-FileHash $_ -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name } |
+            Set-Content dist/SHA256SUMS.txt -Encoding ascii
+          Get-Content dist/SHA256SUMS.txt
+
+      - name: Smoke test the x64 builds
+        shell: pwsh
+        run: |
+          $env:NOTEPADCLASSIC_SETTINGS_HIVE = "$env:RUNNER_TEMP\smoke-hive.dat"
+          $env:NOTEPADCLASSIC_AUTOSAVE_DIR = "$env:RUNNER_TEMP\smoke-autosave"
+          foreach ($name in 'win-x64', 'win-x64-framework-dependent') {
+            $process = Start-Process "publish/$name/NotepadClassic.exe" -PassThru
+            $deadline = (Get-Date).AddSeconds(30)
+            while ($process.MainWindowHandle -eq 0 -and -not $process.HasExited -and (Get-Date) -lt $deadline) {
+              Start-Sleep -Milliseconds 100
+              $process.Refresh()
+            }
+            if ($process.HasExited) { throw "$name exited at startup with code $($process.ExitCode)." }
+            if ($process.MainWindowHandle -eq 0) { $process.Kill(); throw "$name showed no window in 30 s." }
+            "$name shows `"$($process.MainWindowTitle)`""
+            $process.Kill()
+            $process.WaitForExit()
+          }
+
+      - name: Create the release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = '${{ github.ref_name }}'
+          $version = $tag.TrimStart('v')
+          $notes = @"
+          ## Download
+
+          | File | For |
+          |---|---|
+          | ``NotepadClassic-$version-win-x64.zip`` | Most Windows 10/11 PCs. Nothing else to install. |
+          | ``NotepadClassic-$version-win-arm64.zip`` | Windows on ARM (Snapdragon). Nothing else to install. |
+          | ``NotepadClassic-$version-win-x64-framework-dependent.zip`` | Small download for PCs that have the [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0). |
+
+          Unzip anywhere and run ``NotepadClassic.exe``; there is no installer. The exe is not code-signed, so Windows
+          SmartScreen may warn on first run (More info, then Run anyway). Settings are kept in
+          ``HKCU\Software\NotepadClassic``; to remove the app, delete the folder and that key. ``SHA256SUMS.txt`` lists
+          the checksums of the zips.
+
+          "@
+          Set-Content release-notes.md $notes -Encoding utf8
+          $options = @('--title', "Notepad Classic $version", '--notes-file', 'release-notes.md', '--generate-notes')
+          if ($version.Contains('-')) { $options += '--prerelease' }
+          gh release create $tag (Get-ChildItem dist).FullName @options
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
