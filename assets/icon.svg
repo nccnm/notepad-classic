@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notepad Classic Port application icon. Drawn for this project; not derived from any
+     Microsoft artwork. Shapes use even coordinates on a 32-unit grid so the 16, 32, 48, 64
+     and 256 pixel renderings land on whole pixels. Only <path d fill> and <rect fill> are
+     supported by tools/IconGen. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Sheet outline and paper -->
+  <path d="M6 2 H22 L28 8 V30 H6 Z" fill="#3E4C59" />
+  <path d="M8 4 H20 V10 H26 V28 H8 Z" fill="#FFFFFF" />
+  <!-- Folded corner -->
+  <path d="M20 4 L26 10 H20 Z" fill="#C5D0DA" />
+  <!-- Header band -->
+  <rect x="8" y="4" width="12" height="4" fill="#0F7B6C" />
+  <!-- Text lines and caret -->
+  <rect x="10" y="12" width="14" height="2" fill="#7F93A6" />
+  <rect x="10" y="16" width="14" height="2" fill="#7F93A6" />
+  <rect x="10" y="20" width="14" height="2" fill="#7F93A6" />
+  <rect x="10" y="24" width="8" height="2" fill="#7F93A6" />
+  <rect x="20" y="22" width="2" height="6" fill="#0F7B6C" />
+</svg>

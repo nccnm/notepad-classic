@@ -1,0 +1,9 @@
+bin/
+obj/
+.vs/
+*.user
+TestResults/
+coverage/
+BenchmarkDotNet.Artifacts/
+# Large generated perf inputs
+bench/**/generated/

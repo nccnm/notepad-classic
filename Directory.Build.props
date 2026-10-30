@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <!-- Needed so IDE0005 (unused usings) runs on build. Docs are written where they add
+         information, not on every member or parameter, so CS1591/CS1573 are off. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591;CS1573</NoWarn>
+    <Deterministic>true</Deterministic>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <Company>Notepad Classic Port</Company>
+    <Product>Notepad Classic Port</Product>
+    <Copyright>Notepad Classic Port contributors</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or $(MSBuildProjectName.EndsWith('Tests')) or $(MSBuildProjectName.EndsWith('Benchmarks'))">
+    <!-- Tests and benchmarks are not public API: underscores in test names, public test classes
+         and ConfigureAwait are fine there. -->
+    <NoWarn>$(NoWarn);CA1707;CA1515;CA2007</NoWarn>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore NotepadClassicPort.slnx
+
+      - name: Build (warnings are errors)
+        run: dotnet build NotepadClassicPort.slnx -c Release --no-restore
+
+      - name: Core tests with coverage gate (90% line and branch)
+        run: >
+          dotnet test --project tests/NotepadClassic.Core.Tests -c Release --no-build
+          --results-directory TestResults/core --
+          --coverlet --coverlet-include "[NotepadClassic.Core]*" --coverlet-output-format cobertura
+          --coverlet-threshold 90 --coverlet-threshold-type line,branch --coverlet-threshold-stat Total
+
+      - name: Platform integration tests
+        run: dotnet test --project tests/NotepadClassic.Platform.Tests -c Release --no-build --results-directory TestResults/platform
+
+      - name: App shell tests
+        run: dotnet test --project tests/NotepadClassic.App.Tests -c Release --no-build --results-directory TestResults/app
+
+      # Hosted Windows runners have an interactive desktop session, which UI automation needs.
+      - name: End-to-end tests (FlaUI on the built exe)
+        run: dotnet test --project tests/NotepadClassic.E2E.Tests -c Release --no-build --results-directory TestResults/e2e
+
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: TestResults/**/*cobertura*.xml
+          if-no-files-found: ignore
