@@ -13,9 +13,9 @@
     <Deterministic>true</Deterministic>
     <InvariantGlobalization>false</InvariantGlobalization>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <Company>Notepad Classic Port</Company>
-    <Product>Notepad Classic Port</Product>
-    <Copyright>Notepad Classic Port contributors</Copyright>
+    <Company>Notepad Classic</Company>
+    <Product>Notepad Classic</Product>
+    <Copyright>Notepad Classic contributors</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or $(MSBuildProjectName.EndsWith('Tests')) or $(MSBuildProjectName.EndsWith('Benchmarks'))">

@@ -9,9 +9,9 @@ using FlaUI.UIA3;
 namespace NotepadClassic.E2E.Tests;
 
 /// <summary>
-/// One run of the built <c>NotepadClassicPort.exe</c>: its own temporary folder for documents, a
-/// settings hive (<c>NOTEPADCLASSICPORT_SETTINGS_HIVE</c>) and an autosave folder
-/// (<c>NOTEPADCLASSICPORT_AUTOSAVE_DIR</c>), so nothing touches the user's registry or profile.
+/// One run of the built <c>NotepadClassic.exe</c>: its own temporary folder for documents, a
+/// settings hive (<c>NOTEPADCLASSIC_SETTINGS_HIVE</c>) and an autosave folder
+/// (<c>NOTEPADCLASSIC_AUTOSAVE_DIR</c>), so nothing touches the user's registry or profile.
 /// Dispose closes the process (killing it when it does not exit) and deletes the folder.
 /// </summary>
 internal sealed partial class AppSession : IDisposable
@@ -29,8 +29,8 @@ internal sealed partial class AppSession : IDisposable
         Folder = folder;
         _ownsFolder = ownsFolder;
         var info = new ProcessStartInfo(ExePath, arguments) { UseShellExecute = false, WorkingDirectory = folder, RedirectStandardError = true };
-        info.Environment["NOTEPADCLASSICPORT_SETTINGS_HIVE"] = Path.Combine(folder, "settings.dat");
-        info.Environment["NOTEPADCLASSICPORT_AUTOSAVE_DIR"] = Path.Combine(folder, "autosave");
+        info.Environment["NOTEPADCLASSIC_SETTINGS_HIVE"] = Path.Combine(folder, "settings.dat");
+        info.Environment["NOTEPADCLASSIC_AUTOSAVE_DIR"] = Path.Combine(folder, "autosave");
         _process = Process.Start(info) ?? throw new InvalidOperationException("The app did not start.");
         _process.ErrorDataReceived += (_, e) =>
         {
@@ -83,7 +83,7 @@ internal sealed partial class AppSession : IDisposable
         get
         {
             var directory = new DirectoryInfo(AppContext.BaseDirectory);
-            while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "NotepadClassicPort.slnx")))
+            while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "NotepadClassic.slnx")))
             {
                 directory = directory.Parent;
             }
@@ -98,7 +98,7 @@ internal sealed partial class AppSession : IDisposable
 #else
             const string configuration = "Release";
 #endif
-            return Path.Combine(directory.FullName, "src", "NotepadClassic.App", "bin", configuration, "net10.0-windows", "NotepadClassicPort.exe");
+            return Path.Combine(directory.FullName, "src", "NotepadClassic.App", "bin", configuration, "net10.0-windows", "NotepadClassic.exe");
         }
     }
 

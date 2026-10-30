@@ -49,16 +49,16 @@ public sealed class DocumentServiceTests
     {
         var h = new Harness();
         h.Documents.UpdateTitle();
-        h.Window.Title.Should().Be("Untitled - Notepad Classic Port");
+        h.Window.Title.Should().Be("Untitled - Notepad Classic");
 
         h.Editor.Type("a");
         h.Editor.Type("ab");
 
-        h.Window.Titles.Should().Equal("Untitled - Notepad Classic Port", "*Untitled - Notepad Classic Port");
+        h.Window.Titles.Should().Equal("Untitled - Notepad Classic", "*Untitled - Notepad Classic");
 
         h.Editor.Type("");
 
-        h.Window.Title.Should().Be("Untitled - Notepad Classic Port");
+        h.Window.Title.Should().Be("Untitled - Notepad Classic");
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public sealed class DocumentServiceTests
 
         h.OpenSaved(FilePath, "x");
 
-        h.Window.Title.Should().Be("Note.txt - Notepad Classic Port");
+        h.Window.Title.Should().Be("Note.txt - Notepad Classic");
     }
 
     // ---- CheckSave ----
@@ -136,7 +136,7 @@ public sealed class DocumentServiceTests
         h.Dialogs.SaveAsRequests.Should().Equal((@"*.txt", TextEncodingKind.Utf8));
         h.State.Path.Should().Be(@"C:\new.txt");
         h.State.IsUntitled.Should().BeFalse();
-        h.Window.Title.Should().Be("new.txt - Notepad Classic Port");
+        h.Window.Title.Should().Be("new.txt - Notepad Classic");
         h.Files.Saves.Should().Equal((@"C:\new.txt", true));
     }
 
@@ -214,7 +214,7 @@ public sealed class DocumentServiceTests
 
         h.Files.Saves.Should().Equal((FilePath, false));
         h.Files.Files[FilePath].Should().Equal(0xFF, 0xFE, (byte)'n', 0, (byte)'e', 0, (byte)'w', 0);
-        h.Window.Title.Should().Be("Note.txt - Notepad Classic Port");
+        h.Window.Title.Should().Be("Note.txt - Notepad Classic");
     }
 
     [Fact]
@@ -245,7 +245,7 @@ public sealed class DocumentServiceTests
 
         h.Files.Files[@"C:\out.txt"].Should().Equal(0xEF, 0xBB, 0xBF, (byte)'h', (byte)'e', (byte)'l', (byte)'l', (byte)'o');
         h.State.CurrentEncoding.Should().Be(TextEncodingKind.Utf8Bom);
-        h.Window.Title.Should().Be("out.txt - Notepad Classic Port");
+        h.Window.Title.Should().Be("out.txt - Notepad Classic");
         h.StatusView.Parts[4].Should().Be(" UTF-8 with BOM");
     }
 
@@ -433,7 +433,7 @@ public sealed class DocumentServiceTests
         h.State.Path.Should().Be(FilePath);
         h.State.IsUntitled.Should().BeFalse();
         h.State.CurrentEncoding.Should().Be(TextEncodingKind.Utf16LE);
-        h.Window.Title.Should().Be("Note.txt - Notepad Classic Port");
+        h.Window.Title.Should().Be("Note.txt - Notepad Classic");
         h.StatusView.Parts[4].Should().Be(" UTF-16 LE");
         h.Shell.RecentDocuments.Should().Equal(FilePath);
     }
@@ -448,7 +448,7 @@ public sealed class DocumentServiceTests
 
         h.Documents.Load(FilePath, TextEncodingKind.Detect).Should().Be(LoadOutcome.FailedAndReported);
 
-        h.Dialogs.Messages.Should().Equal(($"The {FilePath} file is too large for Notepad Classic Port.\n\nUse another editor to edit the file.", MessageKind.Warning));
+        h.Dialogs.Messages.Should().Equal(($"The {FilePath} file is too large for Notepad Classic.\n\nUse another editor to edit the file.", MessageKind.Warning));
         h.Editor.Calls.Should().NotContain("LoadBuffer");
     }
 
@@ -465,7 +465,7 @@ public sealed class DocumentServiceTests
         h.Dialogs.Messages.Should().ContainSingle().Which.Text.Should().Contain("too large");
         h.State.IsUntitled.Should().BeTrue();
         h.State.Path.Should().BeNull();
-        h.Window.Title.Should().Be("Untitled - Notepad Classic Port");
+        h.Window.Title.Should().Be("Untitled - Notepad Classic");
     }
 
     [Fact]
@@ -506,7 +506,7 @@ public sealed class DocumentServiceTests
         h.Editor.Text.Should().Be(".LOG\r\nold\r\n\r\n2:44 PM 10/29/2026\r\n");
         h.Editor.Calls.Should().ContainInOrder("LoadBuffer", "SetSelection(11,11)", "ScrollCaret", @"ReplaceSelection(\r\n2:44 PM 10/29/2026\r\n,True)");
         h.Documents.IsDirty.Should().BeTrue();
-        h.Window.Title.Should().Be("*Note.txt - Notepad Classic Port");
+        h.Window.Title.Should().Be("*Note.txt - Notepad Classic");
     }
 
     [Fact]
@@ -635,7 +635,7 @@ public sealed class DocumentServiceTests
         h.Editor.Text.Should().BeEmpty();
         h.Editor.Zoom.Should().Be(new ZoomRatio(150, 100));
         h.Editor.WordWrap.Should().BeTrue();
-        h.Window.Title.Should().Be("Untitled - Notepad Classic Port");
+        h.Window.Title.Should().Be("Untitled - Notepad Classic");
         h.StatusView.Parts[4].Should().Be(" UTF-8");
     }
 

@@ -19,7 +19,7 @@ public sealed class SmokeTests
         using var app = AppSession.StartWithFile("notes.txt", "first line\r\nsecond line", out _);
 
         Wait.Until(() => app.Text == "first line\r\nsecond line", "the file text");
-        app.Title.Should().Be(AppSession.FileTitle("notes.txt") + " - Notepad Classic Port");
+        app.Title.Should().Be(AppSession.FileTitle("notes.txt") + " - Notepad Classic");
         app.StatusParts.Should().Contain(" UTF-8").And.Contain(" Windows (CRLF)");
     }
 
@@ -31,10 +31,10 @@ public sealed class SmokeTests
 
         app.Press(VirtualKeyShort.CONTROL, VirtualKeyShort.END);
         app.Type(" def");
-        Wait.Until(() => app.Text == "abc def" && app.Title == "*" + AppSession.FileTitle("a.txt") + " - Notepad Classic Port", "the typed text and the dirty title", () => $"{app.Text} | {app.Title}");
+        Wait.Until(() => app.Text == "abc def" && app.Title == "*" + AppSession.FileTitle("a.txt") + " - Notepad Classic", "the typed text and the dirty title", () => $"{app.Text} | {app.Title}");
         app.Press(VirtualKeyShort.CONTROL, VirtualKeyShort.KEY_S);
 
-        Wait.Until(() => app.Title == AppSession.FileTitle("a.txt") + " - Notepad Classic Port", "the clean title");
+        Wait.Until(() => app.Title == AppSession.FileTitle("a.txt") + " - Notepad Classic", "the clean title");
         File.ReadAllText(path).Should().Be("abc def");
     }
 
@@ -51,7 +51,7 @@ public sealed class SmokeTests
         name.Text = target;
         Wait.For(() => dialog.FindFirstChild(c => c.ByAutomationId("1"))?.AsButton(), "the Save button").Invoke();
 
-        Wait.Until(() => File.Exists(target) && app.Title == AppSession.FileTitle("saved.txt") + " - Notepad Classic Port", "the saved file");
+        Wait.Until(() => File.Exists(target) && app.Title == AppSession.FileTitle("saved.txt") + " - Notepad Classic", "the saved file");
         File.ReadAllBytes(target).Should().Equal(Encoding.UTF8.GetBytes("hello"));
     }
 
@@ -123,7 +123,7 @@ public sealed class SmokeTests
         Wait.Until(() => app.Title.StartsWith('*'), "the dirty title");
 
         app.Press(VirtualKeyShort.ALT, VirtualKeyShort.F4);
-        var question = app.WaitForWindow("Notepad Classic Port");
+        var question = app.WaitForWindow("Notepad Classic");
         Wait.For(() => question.FindFirstDescendant(c => c.ByName("Don't Save"))?.AsButton(), "Don't Save").Invoke();
 
         app.WaitForExit();

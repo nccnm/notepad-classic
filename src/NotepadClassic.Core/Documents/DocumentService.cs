@@ -67,7 +67,7 @@ public sealed class DocumentService
     /// typing and deleting; otherwise <c>EM_GETMODIFY</c>.</summary>
     public bool IsDirty => !(State.IsUntitled && _editor.TextLength == 0) && _editor.Modified;
 
-    /// <summary><c>UpdateTitle</c>: <c>%1%2 - Notepad Classic Port</c> with <c>*</c> when dirty.</summary>
+    /// <summary><c>UpdateTitle</c>: <c>%1%2 - Notepad Classic</c> with <c>*</c> when dirty.</summary>
     public void UpdateTitle()
     {
         var dirty = IsDirty;

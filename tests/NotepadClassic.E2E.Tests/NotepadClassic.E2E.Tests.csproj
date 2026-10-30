@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!--
-    End-to-end tests: FlaUI (UIA3) drives the built NotepadClassicPort.exe as a user would, with a
+    End-to-end tests: FlaUI (UIA3) drives the built NotepadClassic.exe as a user would, with a
     temporary settings hive and autosave folder (environment variables) and files in a temporary
     folder. Every wait is on a condition, never a fixed sleep.
   -->

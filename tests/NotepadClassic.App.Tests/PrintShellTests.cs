@@ -113,6 +113,6 @@ public sealed class PrintShellTests : IDisposable
         _ = NativeMethods.SetWindowLongPtr(edit, NativeMethods.GWL_EXSTYLE, exStyle | NativeMethods.WS_EX_RTLREADING);
 
         app.Editor.RightToLeftReading.Should().BeTrue();
-        app.Host.Window.Title.Should().Be("Untitled - Notepad Classic Port");
+        app.Host.Window.Title.Should().Be("Untitled - Notepad Classic");
     });
 }

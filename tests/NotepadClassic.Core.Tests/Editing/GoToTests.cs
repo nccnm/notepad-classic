@@ -8,7 +8,7 @@ namespace NotepadClassic.Core.Tests.Editing;
 public sealed class GoToTests
 {
     private const string BeyondEnd = "The line number is beyond the total number of lines";
-    private const string Caption = "Notepad Classic Port - Goto Line";
+    private const string Caption = "Notepad Classic - Goto Line";
 
     [Theory]
     [Trait("Doc", "parity.md#tim-kiem")]

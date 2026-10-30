@@ -137,8 +137,8 @@ public sealed class SmallRulesTests
 
     [Theory]
     [Trait("Doc", "parity.md#tieu-de-status-bar")]
-    [InlineData(StringKeys.TitleFormat, "%1%2 - Notepad Classic Port")]
-    [InlineData(StringKeys.AppName, "Notepad Classic Port")]
+    [InlineData(StringKeys.TitleFormat, "%1%2 - Notepad Classic")]
+    [InlineData(StringKeys.AppName, "Notepad Classic")]
     [InlineData(StringKeys.LineColumn, " Ln %d, Col %d")]
     [InlineData(StringKeys.AllFilesFilter, "All Files ")]
     [InlineData(StringKeys.SaveButton, "&Save")]

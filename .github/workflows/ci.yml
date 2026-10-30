@@ -22,10 +22,10 @@ jobs:
           global-json-file: global.json
 
       - name: Restore
-        run: dotnet restore NotepadClassicPort.slnx
+        run: dotnet restore NotepadClassic.slnx
 
       - name: Build (warnings are errors)
-        run: dotnet build NotepadClassicPort.slnx -c Release --no-restore
+        run: dotnet build NotepadClassic.slnx -c Release --no-restore
 
       - name: Core tests with coverage gate (90% line and branch)
         run: >

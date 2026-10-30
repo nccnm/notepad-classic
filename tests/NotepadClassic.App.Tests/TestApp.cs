@@ -72,7 +72,7 @@ internal sealed class TestApp : IDisposable
     public FakeClipboard Clipboard { get; } = new();
 
     /// <summary>A fresh temporary folder, deleted on dispose.</summary>
-    public string AutosaveFolder { get; } = Path.Combine(Path.GetTempPath(), "NotepadClassicPort.Tests", Guid.NewGuid().ToString("N"));
+    public string AutosaveFolder { get; } = Path.Combine(Path.GetTempPath(), "NotepadClassic.Tests", Guid.NewGuid().ToString("N"));
 
     public FakeRestartRegistration Restart { get; } = new();
 

@@ -134,7 +134,7 @@ public sealed unsafe partial class PrintingTests : IDisposable
 
         BinaryPrimitives.ReadUInt32LittleEndian(bytes.AsSpan(12)).Should().Be(0x90C800C0);
         BinaryPrimitives.ReadUInt16LittleEndian(bytes.AsSpan(16)).Should().Be(4);
-        Encoding.Unicode.GetString(bytes).Should().Contain("Now Printing").And.Contain("Cancel").And.Contain("Notepad Classic Port");
+        Encoding.Unicode.GetString(bytes).Should().Contain("Now Printing").And.Contain("Cancel").And.Contain("Notepad Classic");
     }
 
     [Fact]
@@ -151,7 +151,7 @@ public sealed unsafe partial class PrintingTests : IDisposable
             Native.Text(Native.GetDlgItem(dialog, Win32PrintProgress.FileNameId)).Should().Be("notes.txt");
             progress.ShowPage(3);
             Native.Text(Native.GetDlgItem(dialog, Win32PrintProgress.PageId)).Should().Be("Page 3");
-            Native.Text(dialog).Should().Be("Notepad Classic Port");
+            Native.Text(dialog).Should().Be("Notepad Classic");
 
             Native.SendMessage(dialog, User32.WM_INITMENU, User32.GetSystemMenu(dialog, false), 0);
             (User32.GetMenuState(User32.GetSystemMenu(dialog, false), User32.SC_CLOSE, User32.MF_BYCOMMAND) & User32.MF_GRAYED).Should().NotBe(0);

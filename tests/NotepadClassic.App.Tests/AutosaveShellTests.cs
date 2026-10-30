@@ -100,7 +100,7 @@ public sealed class AutosaveShellTests : IDisposable
         restarted.Host.RunCommandLine("RestartByRestartManager:" + id, untrustedSource: false).Should().Be(StartupResult.Run);
 
         restarted.Text.Should().Be("new text\r\nline 2");
-        restarted.Host.Window.Text.Should().Be("*" + new Win32FileTitleProvider().GetTitle(path) + " - Notepad Classic Port");
+        restarted.Host.Window.Text.Should().Be("*" + new Win32FileTitleProvider().GetTitle(path) + " - Notepad Classic");
         restarted.Host.Context.Documents.State.Path.Should().Be(path);
         restarted.Host.Context.Documents.State.CurrentEncoding.Should().Be(TextEncodingKind.Utf8Bom);
         Directory.GetFiles(restarted.AutosaveFolder).Should().BeEmpty("a restored session is deleted");

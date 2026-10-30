@@ -11,7 +11,7 @@ namespace NotepadClassic.App;
 /// </summary>
 internal static class StartupTrace
 {
-    public const string Variable = "NOTEPADCLASSICPORT_STARTUP_TRACE";
+    public const string Variable = "NOTEPADCLASSIC_STARTUP_TRACE";
 
     private static readonly string? s_path = Environment.GetEnvironmentVariable(Variable);
     private static readonly List<(string Label, DateTime At)> s_marks = [];

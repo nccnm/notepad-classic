@@ -33,7 +33,7 @@ public sealed unsafe class Win32DialogService(Func<nint> owner, ILocalizedString
     private string Caption => _strings.GetString(StringKeys.AppName);
 
     /// <summary>
-    /// Task dialog: no icon, title "Notepad Classic Port", the question as main instruction,
+    /// Task dialog: no icon, title "Notepad Classic", the question as main instruction,
     /// buttons "&amp;Save" (6), "Do&amp;n't Save" (7) and Cancel, Save the default. When the task
     /// dialog fails, a Yes/No/Cancel message box.
     /// </summary>

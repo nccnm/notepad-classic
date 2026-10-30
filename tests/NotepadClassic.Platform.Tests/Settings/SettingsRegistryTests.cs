@@ -7,7 +7,7 @@ namespace NotepadClassic.Platform.Tests.Settings;
 
 /// <summary>
 /// The registry store on a temporary application hive (<c>RegLoadAppKey</c>): never the real
-/// <c>HKCU\Software\NotepadClassicPort</c> or <c>HKCU\Software\Microsoft\Notepad</c>.
+/// <c>HKCU\Software\NotepadClassic</c> or <c>HKCU\Software\Microsoft\Notepad</c>.
 /// </summary>
 public sealed unsafe class SettingsRegistryTests : IDisposable
 {

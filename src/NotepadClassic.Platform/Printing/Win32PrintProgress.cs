@@ -50,7 +50,7 @@ public sealed unsafe class Win32PrintProgress : IPrintProgress
 
     public bool Cancelled { get; private set; }
 
-    /// <summary>"Notepad Classic Port", "MS Shell Dlg" 8, 200x64 dialog units: Cancel, the "Now
+    /// <summary>"Notepad Classic", "MS Shell Dlg" 8, 200x64 dialog units: Cancel, the "Now
     /// Printing" line, the file name (path ellipsis) and the page line, all centered.</summary>
     internal static byte[] BuildTemplate(ILocalizedStrings strings)
     {

@@ -11,13 +11,13 @@ namespace NotepadClassic.Platform.Settings;
 /// </summary>
 public sealed class Win32SettingsRegistry : ISettingsRegistry, IDisposable
 {
-    public const string UserPath = @"Software\NotepadClassicPort";
-    public const string MachineDefaultFontsPath = @"Software\NotepadClassicPort\DefaultFonts";
+    public const string UserPath = @"Software\NotepadClassic";
+    public const string MachineDefaultFontsPath = @"Software\NotepadClassic\DefaultFonts";
     public const string LegacyPath = @"Software\Microsoft\Notepad";
 
     /// <summary>Environment variable naming a hive file (<c>RegLoadAppKey</c>) that replaces every
     /// root: end-to-end tests run the app against it so the real registry is never touched.</summary>
-    public const string HiveVariable = "NOTEPADCLASSICPORT_SETTINGS_HIVE";
+    public const string HiveVariable = "NOTEPADCLASSIC_SETTINGS_HIVE";
 
     /// <summary>Inside a hive file the HKLM key lives under this prefix, so that it is not a subkey
     /// of the user key (which would make the user key exist).</summary>

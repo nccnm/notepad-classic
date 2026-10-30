@@ -41,7 +41,7 @@ public sealed class PrintServiceTests
         device.Font!.Value.Font.Should().Be(h.Settings.Font);
         device.Font!.Value.Height.Should().Be(-91);
         device.Log[0].Should().Be("abortproc");
-        device.Log[1].Should().Be("startdoc Untitled - Notepad Classic Port");
+        device.Log[1].Should().Be("startdoc Untitled - Notepad Classic");
         device.Log.Should().EndWith("enddoc");
         device.Disposed.Should().BeTrue();
         h.Printers.Progress!.FileLabel.Should().Be("Untitled");
@@ -84,7 +84,7 @@ public sealed class PrintServiceTests
 
         h.Printers.Opens.Should().Equal((PrinterChoice.Named, "PDF"));
         h.Printers.Progress!.FileLabel.Should().Be("notes.txt");
-        h.Printers.Device.Log.Should().Contain("startdoc notes.txt - Notepad Classic Port");
+        h.Printers.Device.Log.Should().Contain("startdoc notes.txt - Notepad Classic");
         h.Printers.Device.Lines[0].Should().Be(("notes.txt", 300, 450));
     }
 
@@ -121,7 +121,7 @@ public sealed class PrintServiceTests
 
         h.Printing.Print(PrinterChoice.Dialog);
 
-        h.Printers.Device.Log.Should().Equal("abortproc", "startdoc Untitled - Notepad Classic Port", "enddoc");
+        h.Printers.Device.Log.Should().Equal("abortproc", "startdoc Untitled - Notepad Classic", "enddoc");
     }
 
     [Fact]

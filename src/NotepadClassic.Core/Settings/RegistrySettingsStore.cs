@@ -6,10 +6,10 @@ namespace NotepadClassic.Core.Settings;
 /// <summary>Registry keys the settings come from.</summary>
 public enum SettingsLocation
 {
-    /// <summary><c>HKCU\Software\NotepadClassicPort</c>: the port's own settings, read and written.</summary>
+    /// <summary><c>HKCU\Software\NotepadClassic</c>: the port's own settings, read and written.</summary>
     User,
 
-    /// <summary><c>HKLM\Software\NotepadClassicPort\DefaultFonts</c>: machine-wide default font.</summary>
+    /// <summary><c>HKLM\Software\NotepadClassic\DefaultFonts</c>: machine-wide default font.</summary>
     MachineDefaultFonts,
 
     /// <summary><c>HKCU\Software\Microsoft\Notepad</c>: the original's settings, only ever read (import).</summary>
@@ -250,7 +250,7 @@ public sealed class RegistrySettingsStore(ISettingsRegistry registry, SettingsDe
     }
 
     /// <summary>
-    /// Port decision (parity.md): when <c>HKCU\Software\NotepadClassicPort</c> does not exist, every
+    /// Port decision (parity.md): when <c>HKCU\Software\NotepadClassic</c> does not exist, every
     /// value of the original's key that the port reads, and that has the right kind and size, is
     /// copied into it, without asking. It runs once, since the key exists afterwards. Values the
     /// port does not use (<c>ShowStoreBanner</c>, <c>fSaveWindowPositions</c>,

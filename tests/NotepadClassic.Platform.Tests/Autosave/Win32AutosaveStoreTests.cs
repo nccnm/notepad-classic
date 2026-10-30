@@ -26,7 +26,7 @@ public sealed class Win32AutosaveStoreTests : IDisposable
     [Trait("Doc", "parity.md#autosave-va-restart-manager")]
     public void Default_folder_is_under_local_app_data()
     {
-        Win32AutosaveStore.DefaultFolder.Should().EndWith(@"\NotepadClassicPort\Autosave");
+        Win32AutosaveStore.DefaultFolder.Should().EndWith(@"\NotepadClassic\Autosave");
         Win32AutosaveStore.DefaultFolder.Should().StartWith(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
     }
 

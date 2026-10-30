@@ -35,7 +35,7 @@ public sealed unsafe partial class StartupShellTests : IDisposable
 
         app.Text.Should().Be("Hi");
         app.Host.Context.Documents.State.CurrentEncoding.Should().Be(TextEncodingKind.Utf16LE);
-        app.Host.Window.Text.Should().Be(new Win32FileTitleProvider().GetTitle(PathOf("w.txt")) + " - Notepad Classic Port");
+        app.Host.Window.Text.Should().Be(new Win32FileTitleProvider().GetTitle(PathOf("w.txt")) + " - Notepad Classic");
     });
 
     [Fact]

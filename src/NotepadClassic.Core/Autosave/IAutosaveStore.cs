@@ -6,7 +6,7 @@ namespace NotepadClassic.Core.Autosave;
 public readonly record struct AutosaveEntry(string Id, bool HasManifest, TimeSpan Age);
 
 /// <summary>
-/// The autosave folder (<c>%LOCALAPPDATA%\NotepadClassicPort\Autosave</c>): per session id a
+/// The autosave folder (<c>%LOCALAPPDATA%\NotepadClassic\Autosave</c>): per session id a
 /// manifest <c>&lt;id&gt;.json</c> and, when the document was dirty, its text <c>&lt;id&gt;.txt</c>
 /// as raw UTF-16 LE. Failures surface as <see cref="IOException"/>.
 /// </summary>

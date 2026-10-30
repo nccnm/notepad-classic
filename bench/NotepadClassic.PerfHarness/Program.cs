@@ -217,8 +217,8 @@ internal static unsafe class Program
     {
         var info = new ProcessStartInfo(exe, file is null ? "" : $"\"{file}\"") { UseShellExecute = false };
         // The port keeps settings and autosave data out of the user's profile; the original ignores both.
-        info.Environment["NOTEPADCLASSICPORT_SETTINGS_HIVE"] = hive ?? Path.Combine(Root, "settings.dat");
-        info.Environment["NOTEPADCLASSICPORT_AUTOSAVE_DIR"] = Path.Combine(Root, "autosave");
+        info.Environment["NOTEPADCLASSIC_SETTINGS_HIVE"] = hive ?? Path.Combine(Root, "settings.dat");
+        info.Environment["NOTEPADCLASSIC_AUTOSAVE_DIR"] = Path.Combine(Root, "autosave");
         t_shown = 0;
         var start = Stopwatch.GetTimestamp();
         using var process = Process.Start(info)!;
@@ -413,8 +413,8 @@ internal static unsafe class Program
     private static double[] FindOnce(Options options, string text)
     {
         var info = new ProcessStartInfo(options.Exe!) { UseShellExecute = false };
-        info.Environment["NOTEPADCLASSICPORT_SETTINGS_HIVE"] = options.Hive ?? Path.Combine(Root, "settings.dat");
-        info.Environment["NOTEPADCLASSICPORT_AUTOSAVE_DIR"] = Path.Combine(Root, "autosave");
+        info.Environment["NOTEPADCLASSIC_SETTINGS_HIVE"] = options.Hive ?? Path.Combine(Root, "settings.dat");
+        info.Environment["NOTEPADCLASSIC_AUTOSAVE_DIR"] = Path.Combine(Root, "autosave");
         t_shown = 0;
         using var process = Process.Start(info)!;
         var hook = Native.SetWinEventHook(Native.EVENT_OBJECT_SHOW, Native.EVENT_OBJECT_SHOW, 0, &OnShow, (uint)process.Id, 0, Native.WINEVENT_OUTOFCONTEXT);

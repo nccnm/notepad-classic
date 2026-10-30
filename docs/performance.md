@@ -15,7 +15,7 @@ máy rảnh (không build, không benchmark chạy song song): số đo trong l�
 | `bench/NotepadClassic.PerfHarness launch` | Ngoài tiến trình, cùng phương pháp cho port và gốc: từ `CreateProcess` tới cửa sổ cấp cao đầu tiên hiện (`EVENT_OBJECT_SHOW` qua `SetWinEventHook`) và tới khi `WM_GETTEXTLENGTH` của Edit bằng số ký tự mong đợi. File mẫu 1/50/500 MB (ASCII, UTF-8 có chữ Việt, UTF-16 LE có BOM) sinh lúc chạy trong `%TEMP%\npport-perf` rồi xóa. Lần đầu báo riêng, median và min của các lần sau | `dotnet run --project bench/NotepadClassic.PerfHarness -c Release -- launch --exe <exe> --sizes 1,50 --kinds ascii,utf8,utf16 --runs 5 [--hive <hive settings của port>]` |
 | `bench/NotepadClassic.PerfHarness editload` | Ba cách đưa văn bản vào Edit control trong cùng tiến trình | `... -- editload --sizes 1,50,500 --runs 5` |
 | `bench/NotepadClassic.PerfHarness find` | Ngoài tiến trình, cùng phương pháp cho port và gốc: khởi động exe, `WM_SETTEXT` văn bản sinh như benchmark (50 triệu ký tự, ASCII hoặc có "tiếng Việt " mỗi 400 ký tự) vào Edit, Ctrl+F bằng `SendInput`, điền chuỗi tìm vào hộp Find (`#32770`, control 1152), bỏ Match case và Wrap around, chọn Down, rồi mỗi lần click: `EM_SETSEL(0,0)`, `WM_COMMAND` nút Find Next, đo tới khi hộp "Cannot find" hiện (`EVENT_OBJECT_SHOW`), đóng hộp. `--repeat` là số click trong một tiến trình (click 1 của port gồm chi phí JIT lần đầu) | `... -- find --exe <exe> --chars 50000000 --kinds ascii,mixed --pattern zqxj --runs 5 --repeat 3` |
-| `NOTEPADCLASSICPORT_STARTUP_TRACE=<file>` | Dòng thời gian khởi động của chính app: mỗi mốc trong `Program`, `AppHost`, `MainForm` ghi ms tính từ lúc tiến trình được tạo, cộng số method JIT đã biên dịch (`JitInfo`), thời gian JIT và số GC; ghi ra file khi message loop rảnh lần đầu. Không đặt biến thì chỉ tốn một lần đọc môi trường | `$env:NOTEPADCLASSICPORT_STARTUP_TRACE = "trace.txt"; .\NotepadClassicPort.exe` |
+| `NOTEPADCLASSIC_STARTUP_TRACE=<file>` | Dòng thời gian khởi động của chính app: mỗi mốc trong `Program`, `AppHost`, `MainForm` ghi ms tính từ lúc tiến trình được tạo, cộng số method JIT đã biên dịch (`JitInfo`), thời gian JIT và số GC; ghi ra file khi message loop rảnh lần đầu. Không đặt biến thì chỉ tốn một lần đọc môi trường | `$env:NOTEPADCLASSIC_STARTUP_TRACE = "trace.txt"; .\NotepadClassic.exe` |
 
 Port luôn chạy với hive settings và thư mục autosave tạm (biến môi trường), nên không đụng cài đặt thật. "Lạnh" thật
 (xóa file cache của hệ điều hành) cần quyền admin nên không đo; "lần đầu" trong bảng là lần đầu sau khi file được sinh.
@@ -51,7 +51,7 @@ Ngân sách đề xuất trong kế hoạch tổng, chốt lại sau lần đo n
 Hai app sàn nằm ngoài repo (chỉ để đo, mã vài chục dòng); sàn 2 dùng đúng các control mà quyết định cố định của dự án
 giữ lại (MenuStrip, StatusStrip, Edit control). Khoảng cách port - sàn 2 là 46 ms, là toàn bộ phần port có thể tác động.
 
-Phân rã một lần khởi động ấm của bản ReadyToRun (`NOTEPADCLASSICPORT_STARTUP_TRACE`, ms từ lúc tạo tiến trình; JIT ở
+Phân rã một lần khởi động ấm của bản ReadyToRun (`NOTEPADCLASSIC_STARTUP_TRACE`, ms từ lúc tạo tiến trình; JIT ở
 lúc rảnh đầu tiên: 450 method, 33 ms, 0 GC):
 
 | Mốc | Tới ms | Bước | ms |

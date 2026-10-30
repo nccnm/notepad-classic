@@ -12,7 +12,7 @@ namespace NotepadClassic.Platform.Tests.Services;
 public sealed partial class GoToDialogTests
 {
     private const string ErrorText = "The line number is beyond the total number of lines";
-    private const string ErrorCaption = "Notepad Classic Port - Goto Line";
+    private const string ErrorCaption = "Notepad Classic - Goto Line";
     
     [Fact]
     [Trait("Doc", "parity.md#tim-kiem")]

@@ -58,7 +58,7 @@ public sealed unsafe partial class ShellTests : IDisposable
         ((ToolStripMenuItem)menus[3].DropDownItems[0]).DropDownItems.Cast<ToolStripItem>().Select(Describe).Should().Equal(
             "Zoom &In\tCtrl+Plus", "Zoom &Out\tCtrl+Minus", "&Restore Default Zoom\tCtrl+0");
         menus[4].DropDownItems.Cast<ToolStripItem>().Select(Describe).Should().Equal(
-            "View &Help", "Send &Feedback", "-", "&About Notepad Classic Port");
+            "View &Help", "Send &Feedback", "-", "&About Notepad Classic");
     });
 
     [Fact]
@@ -284,13 +284,13 @@ public sealed unsafe partial class ShellTests : IDisposable
         using var app = new TestApp();
         var path = Path.Combine(_dir, "Note.txt");
         app.Editor.ReplaceSelection("xin chào\r\n", canUndo: true);
-        app.Host.Window.Text.Should().Be("*Untitled - Notepad Classic Port");
+        app.Host.Window.Text.Should().Be("*Untitled - Notepad Classic");
         app.Dialogs.SaveAs.Enqueue(FileDialogResult.Ok(path, TextEncodingKind.Utf16LE));
 
         app.Host.Registry.TryExecute(CommandId.Save, app.Host.Context).Should().BeTrue();
 
         File.ReadAllBytes(path).Should().Equal(new byte[] { 0xFF, 0xFE }.Concat(Encoding.Unicode.GetBytes("xin chào\r\n")));
-        app.Host.Window.Text.Should().StartWith("Note").And.EndWith(" - Notepad Classic Port");
+        app.Host.Window.Text.Should().StartWith("Note").And.EndWith(" - Notepad Classic");
         app.Host.Window.PartText(StatusBarPresenter.EncodingPart).Should().Be(" UTF-16 LE");
 
         app.Dialogs.Open.Enqueue(FileDialogResult.Ok(path, TextEncodingKind.Detect));

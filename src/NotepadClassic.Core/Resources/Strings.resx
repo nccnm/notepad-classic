@@ -37,7 +37,7 @@
     <comment>MUI 4</comment>
   </data>
   <data name="TitleFormat" xml:space="preserve">
-    <value>%1%2 - Notepad Classic Port</value>
+    <value>%1%2 - Notepad Classic</value>
     <comment>MUI 5, product name replaced</comment>
   </data>
   <data name="NotEnoughMemory" xml:space="preserve">
@@ -45,11 +45,11 @@
     <comment>MUI 7</comment>
   </data>
   <data name="FileTooLarge" xml:space="preserve">
-    <value>The %% file is too large for Notepad Classic Port.&#xA;&#xA;Use another editor to edit the file.</value>
+    <value>The %% file is too large for Notepad Classic.&#xA;&#xA;Use another editor to edit the file.</value>
     <comment>MUI 8, product name replaced</comment>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>Notepad Classic Port</value>
+    <value>Notepad Classic</value>
     <comment>MUI 9 and 3000 (message box and task dialog title), product name replaced</comment>
   </data>
   <data name="FileDialogsFailed" xml:space="preserve">
@@ -161,7 +161,7 @@
     <comment>MUI 6</comment>
   </data>
   <data name="GoToCaption" xml:space="preserve">
-    <value>Notepad Classic Port - Goto Line</value>
+    <value>Notepad Classic - Goto Line</value>
     <comment>MUI 30, product name replaced</comment>
   </data>
   <data name="GoToBeyondEnd" xml:space="preserve">
@@ -421,7 +421,7 @@
     <comment>menu</comment>
   </data>
   <data name="Menu_Help_About" xml:space="preserve">
-    <value>&amp;About Notepad Classic Port</value>
+    <value>&amp;About Notepad Classic</value>
     <comment>menu, product name replaced</comment>
   </data>
   <data name="PrintDialogsFailed" xml:space="preserve">
@@ -437,7 +437,7 @@
     <comment>MUI 25</comment>
   </data>
   <data name="CannotShutDown" xml:space="preserve">
-    <value>You cannot shut down or log off Windows because&#xA;the Save As dialog box in Notepad Classic Port is open. Switch to&#xA;Notepad Classic Port, close this dialog box, and then try shutting&#xA;down or logging off Windows again.</value>
+    <value>You cannot shut down or log off Windows because&#xA;the Save As dialog box in Notepad Classic is open. Switch to&#xA;Notepad Classic, close this dialog box, and then try shutting&#xA;down or logging off Windows again.</value>
     <comment>MUI 24</comment>
   </data>
   <data name="PageTooSmall" xml:space="preserve">

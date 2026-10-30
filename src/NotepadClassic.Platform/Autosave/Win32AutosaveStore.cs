@@ -13,7 +13,7 @@ namespace NotepadClassic.Platform.Autosave;
 public sealed class Win32AutosaveStore : IAutosaveStore
 {
     /// <summary>Names another folder (tests, E2E runs) instead of <see cref="DefaultFolder"/>.</summary>
-    public const string FolderVariable = "NOTEPADCLASSICPORT_AUTOSAVE_DIR";
+    public const string FolderVariable = "NOTEPADCLASSIC_AUTOSAVE_DIR";
 
     private const string ManifestExtension = ".json";
     private const string TextExtension = ".txt";
@@ -28,11 +28,11 @@ public sealed class Win32AutosaveStore : IAutosaveStore
 
     public string Folder { get; }
 
-    /// <summary><c>%LOCALAPPDATA%\NotepadClassicPort\Autosave</c>.</summary>
+    /// <summary><c>%LOCALAPPDATA%\NotepadClassic\Autosave</c>.</summary>
     public static string DefaultFolder =>
         Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.DoNotVerify),
-            "NotepadClassicPort", "Autosave");
+            "NotepadClassic", "Autosave");
 
     /// <summary>The folder named by <see cref="FolderVariable"/>, otherwise <see cref="DefaultFolder"/>.</summary>
     public static Win32AutosaveStore FromEnvironment()
